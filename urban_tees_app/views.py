@@ -13,8 +13,6 @@ def main(request):
 def user_layout(request):
     return render(request,'user_layout.html')
 
-def admin_view_product(request):
-    return render(request,'admin_view_product.html')
 
 def admin_operations(request):
     return render(request,'admin_operations.html')
@@ -69,8 +67,40 @@ def admin_add_layout(request):
 
     return render(request,'admin_add_layout.html',{'item':n})
 
+def admin_view_product(request):
+    return render(request,'admin_view_product.html')
 
+def admin_view_layout(request):
+    if request.method == 'POST':
+        product_title = request.POST.get('product_title')
+        product_description = request.POST.get('product_description')
+        old_price = request.POST.get('old_price')
+        category = request.POST.get('category')
+        offer = request.POST.get('offer')
+        new_price = request.POST.get('new_price')
 
+        f = request.FILES.get('file_name')
+
+        if f:
+            n = f.name  
+        else:
+            n = None
+
+        product = Product(
+            item_image=f,  
+            item_name=product_title,
+            item_description=product_description,
+            old_price=int(old_price) if old_price else 0,
+            new_price=int(new_price) if new_price else 0,
+            offer=int(offer) if offer else 0,
+            category=category
+        )
+        product.save()
+
+        return redirect('admin_view_layout') 
+
+    items = Product.objects.all()
+    return render(request, 'admin_view_product.html', {'item': items})
 def admin_edit(request):
   
   item_details=Product.objects.all()
