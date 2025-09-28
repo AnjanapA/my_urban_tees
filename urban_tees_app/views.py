@@ -13,6 +13,8 @@ def main(request):
 def user_layout(request):
     return render(request,'user_layout.html')
 
+def admin_view_product(request):
+    return render(request,'admin_view_product.html')
 
 def admin_operations(request):
     return render(request,'admin_operations.html')
@@ -28,9 +30,12 @@ def image_preview(request):
         return render(request,'admin_add_layout.html',{'item':n})
     return render(request,'admin_add_layout.html',{'item':''})
 
+def admin_layout(request):
+    return render(request,'admin_layout.html')
+
 def admin_add_layout(request):
     n=""
-    upload=''
+    upload=""
     context={}
     if request.method == 'POST':
         product_title=request.POST.get('product_title')
@@ -47,60 +52,54 @@ def admin_add_layout(request):
                 destination.write(chunk)
         
         if f:
-            n=os.path.join('images/',f.name)
-            upload='file uploaded successfully'
+            n=os.path.join('static/images/',f.name)
 
-            
-            
-        context=Product(
-        item_image=n,
-        item_name=product_title,
-        item_description=product_description,
-        old_price=old_price,
-        new_price=new_price,
-        offer=offer,
-        category=category
+                
+                
+            context=Product(
+            item_image=n,
+            item_name=product_title,
+            item_description=product_description,
+            old_price=old_price,
+            new_price=new_price,
+            offer=offer,
+            category=category
 
-        )
+            )
 
         context.save()
 
-    return render(request,'admin_add_layout.html',{'item':n})
+        upload='file uploaded successfully'
+    else:
+        upload = "No file uploaded."
 
-def admin_view_product(request):
-    return render(request,'admin_view_product.html')
+    return render(request,'admin_add_layout.html',{'upload':upload})
 
 def admin_view_layout(request):
-    if request.method == 'POST':
-        product_title = request.POST.get('product_title')
-        product_description = request.POST.get('product_description')
-        old_price = request.POST.get('old_price')
-        category = request.POST.get('category')
-        offer = request.POST.get('offer')
-        new_price = request.POST.get('new_price')
+    item_details=Product.objects.all()
+    # if request.method == 'POST':
+    #     product_title=request.POST.get('product_title')
+    #     product_description=request.POST.get('product_description')
+    #     old_price=int(request.POST.get('old_price'))
+    #     category=request.POST.get('category')
+    #     offer=int(request.POST.get('offer'))
+    #     new_price=int(request.POST.get('new_price'))
 
-        f = request.FILES.get('file_name')
+    #     f=request.FILES['file_name']
+    #     n=os.path.join('images/',f.name)
 
-        if f:
-            n = f.name  
-        else:
-            n = None
+    # item=Product(
+    #     id=0,  
+    #     item_image='n',
+    #     item_name='product_title',
+    #     item_description='product_description',
+    #     new_price='new_price',
+    #     old_price='old_price',
+    #     offer='offer',
+    #     category='category'
+    #     )
+    return render(request,'admin_view_layout.html',{'item':item_details})
 
-        product = Product(
-            item_image=f,  
-            item_name=product_title,
-            item_description=product_description,
-            old_price=int(old_price) if old_price else 0,
-            new_price=int(new_price) if new_price else 0,
-            offer=int(offer) if offer else 0,
-            category=category
-        )
-        product.save()
-
-        return redirect('admin_view_layout') 
-
-    items = Product.objects.all()
-    return render(request, 'admin_view_product.html', {'item': items})
 def admin_edit(request):
   
   item_details=Product.objects.all()
