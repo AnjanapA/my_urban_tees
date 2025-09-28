@@ -175,3 +175,4 @@ def admin_delete_layout(request,id):
 
     context=Product.objects.filter(id=id).delete()
   return redirect('/admin_edit_layout/')
+,.nflkqbnlj
