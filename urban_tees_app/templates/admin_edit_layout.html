@@ -20,12 +20,12 @@
             {% for p in context %}
             <option value="{{ p.id }}"> {{ p.id }}</option>
             {% endfor %}
-            
+
         </select>
     </form>
 
-    <form action="{% url 'admin_update_layout' %}" method="post" name="admin_layout" 
-    enctype="multipart/form-data">{% csrf_token %}
+    <form action="{% url 'admin_update_layout' %}" method="post" name="admin_layout" enctype="multipart/form-data">{%
+        csrf_token %}
         <div class="bgclr" width="50" height="auto">
             {% if n %}
             <h3 id="image">
@@ -113,29 +113,29 @@
                 </div>
             </div>
         </div>
-       <div class="row">
-        <div class="col">
+        <div class="row">
+            <div class="col">
 
-            <button type="submit">
-                UPDATE
-            </button>
+                <button type="submit">
+                    UPDATE
+                </button>
+            </div>
         </div>
-       </div>
-       <div class="row">
-        <div class="col">
+        <div class="row">
+            <div class="col">
 
-            <button type="submit">
-                DELETE
-            </button>
+                <button type="submit">
+                    DELETE
+                </button>
+            </div>
         </div>
-       </div>
-       <div class="row">
-        <h2 name="upload">
-            {% if upload %}
-            {{ upload }}
-            {% endif %}
-        </h2>
-       </div>
+        <div class="row">
+            <h2 name="upload">
+                {% if upload %}
+                {{ upload }}
+                {% endif %}
+            </h2>
+        </div>
     </form>
 </body>
 

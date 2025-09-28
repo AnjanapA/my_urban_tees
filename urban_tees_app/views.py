@@ -114,7 +114,7 @@ def category_product(request,category):
     if request.method=='POST':
         category=request.POST.get('select_category')
         item=Product.objects.get(category=category)
-    return render(request,'admin_edit_layout.html',{'context':item_details,'category':category})
+    return render(request,'admin_view_layout.html',{'context':item_details,'category':category})
 
 def admin_edit(request):
   
