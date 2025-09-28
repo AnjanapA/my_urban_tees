@@ -99,6 +99,22 @@ def admin_view_layout(request):
     #     category='category'
     #     )
     return render(request,'admin_view_layout.html',{'item':item_details})
+def category_product(request,category):
+    item_details=Product.objects.all()
+    item=Product(
+        id=0,  
+        item_image='n',
+        item_name='product_title',
+        item_description='product_description',
+        new_price='new_price',
+        old_price='old_price',
+        offer='offer',
+        category='category'
+        )
+    if request.method=='POST':
+        category=request.POST.get('select_category')
+        item=Product.objects.get(category=category)
+    return render(request,'admin_edit_layout.html',{'context':item_details,'category':category})
 
 def admin_edit(request):
   
@@ -113,7 +129,7 @@ def admin_edit(request):
     offer='',
     category=''
     )
-  return render(request,'admin_edit_layout.html',{'context':item_details,'item':item})
+  return render(request,'admin_view_layout.html',{'context':item_details,'item':item})
 
 
 def admin_edit_layout(request):

@@ -10,7 +10,9 @@ path('image_preview',views.image_preview,name='image_preview'),
 
 path('admin_layout',views.admin_layout,name='admin_layout'),
 path('admin_add_layout',views.admin_add_layout,name='admin_add_layout'),
+
 path('admin_view_layout',views.admin_add_layout,name='admin_view_layout'),
+path('category_product/<str:category>',views.category_product,name='category_product'),
 
 path('admin_edit_layout',views.admin_view_layout,name='admin_view_layout'),
 path('admin_edit_layout/<int:id>',views.admin_edit_layout,name='admin_edit_layout'),
